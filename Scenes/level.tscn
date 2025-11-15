@@ -4271,10 +4271,8 @@ scale = Vector2(0.5, 0.67981)
 offset = Vector2(250, -200)
 script = ExtResource("7_8c0lf")
 
-[node name="Mob" parent="." instance=ExtResource("9_bvt00")]
-position = Vector2(836, 579)
-
 [node name="coin" parent="." instance=ExtResource("10_qxfql")]
+position = Vector2(1490, 598)
 
 [node name="coin2" parent="." instance=ExtResource("10_qxfql")]
 position = Vector2(548, 597)
@@ -4284,3 +4282,9 @@ position = Vector2(915, 411)
 
 [node name="coin4" parent="." instance=ExtResource("10_qxfql")]
 position = Vector2(1242, 268)
+
+[node name="Mob" parent="." instance=ExtResource("9_bvt00")]
+position = Vector2(836, 579)
+
+[node name="Mob2" parent="." instance=ExtResource("9_bvt00")]
+position = Vector2(1769, 577)
