@@ -1,29 +1,41 @@
 extends CharacterBody2D
-
-const SPEED = 100.0
-const GRAVITY = 980.0
-
-var direction = -1.0
-
+var health = 1
 @onready var animated_sprite = $AnimatedSprite2D
+@export var gravity = 980.0
+var direction = 0
+var SPEED = 150.0
+
+func take_damage(amount):
+	health -= amount
+	print("Enemigo golpeado. Vida restante: ", health)
+
+	if health <= 0:
+		die()
+		
+func die():
+	# Lógica de muerte (animación, sonido, partículas, etc.)
+	print("Enemigo ha muerto.")
+	$AnimatedSprite2D.play("die")
+	queue_free()
 	
 func _physics_process(delta):
-	var velocity = self.velocity
+	var velocity = get_velocity()
 	
 	if not is_on_floor():
-		velocity.y += GRAVITY * delta
+		velocity.y += gravity * delta
 		
-	if is_on_floor():
-		# Voltear si toca una pared o un borde (usa los RayCast2D)
-		if (direction == -1 and $RayCastLeft.is_colliding()) or \
-		   (direction == 1 and $RayCastRight.is_colliding()):
-			direction *= -1 # Cambia de dirección
+	if (direction == -1 and $RayCastLeft.is_colliding()) or \
+	   (direction == 1 and $RayCastRight.is_colliding()):
+		direction *= -1 # Cambia de dirección
+	
+	# Mover
+	velocity.x = direction * SPEED
+	$AnimatedSprite2D.flip_h = (direction != 1)
+	$AnimatedSprite2D.play("walk")
 		
-		# Mover
-		velocity.x = direction * SPEED
-		# Control de Volteo (Flip visual)
-		$AnimatedSprite2D.flip_h = (direction != 1)
-		$AnimatedSprite2D.play("walk")
-		
-	self.velocity = velocity
 	move_and_slide()
+
+
+func _on_hitbox_attack_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		body.receive_damage(1)

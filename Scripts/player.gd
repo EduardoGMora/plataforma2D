@@ -2,53 +2,44 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -450.0
-const GRAVITY = 980.0
-@export var roll_speed_multiplier = 1.1 # Por si decides añadirlo después
+@export var gravity = 980.0
+@export var roll_speed_multiplier = 1.1
 @onready var animated_sprite = $AnimatedSprite2D # Referencia a tu nodo AnimatedSprite2D
+@onready var attack_hitbox = $Hitbox_Attack
+var health = 3
 
 # Variables de estado
 var is_rolling = false
 var is_attacking = false
-var _direction = 0.0
-var diamonds_collected = 0
+var coins_collected = 0
+const COINS_TO_WIN = 5
 
 func _ready() -> void:
 	pass
 
 func _physics_process(delta):
-	var velocity = self.velocity
+	var velocity = get_velocity()
 	
-	# 1. Aplicar la gravedad (física 2D)
 	if not is_on_floor():
-		velocity.y += GRAVITY * delta
+		velocity.y += gravity * delta
 	
 	# 2. Lógica de Salto (InputMap)
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		
-	# 3. Lógica de Movimiento Horizontal (InputMap)
+	var direction = Input.get_axis("move_left","move_right")
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, 15) # Desaceleración
 	
-	# Reiniciamos la dirección horizontal a 0 antes de chequear las entradas
-	_direction = 0.0
-	if Input.is_action_pressed("move_right"):
-		_direction = 1.0
-	elif Input.is_action_pressed("move_left"):
-		# Usamos 'elif' para que si se presionan ambas, 'move_right' tenga prioridad
-		_direction = -1.0
-	
-	# Asignamos la velocidad horizontal
-	velocity.x = _direction * SPEED
-	
-	# 4. Control de Volteo (Flip)
 	if velocity.x > 0:
 		animated_sprite.flip_h = false # Mira a la derecha
 	elif velocity.x < 0:
 		animated_sprite.flip_h = true  # Mira a la izquierda
 		
-	# 5. Actualización de Animación
 	_update_animation(velocity)
 	
-	# 6. Mover el cuerpo y gestionar colisiones
 	self.velocity = velocity
 	move_and_slide()
 	
@@ -62,6 +53,43 @@ func _update_animation(velocity):
 		
 	animated_sprite.play(animation_name)
 	
-func collect_diamond():
-	diamonds_collected += 1
+func collect_coin():
+	coins_collected += 1
+	if coins_collected >= COINS_TO_WIN:
+		win_game()
 	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack") and !is_attacking:
+		is_attacking = true
+		attack()
+
+func attack():
+	animated_sprite.play("attack")
+	attack_hitbox.monitoring = true
+	
+func take_damage(amount):
+	health -= amount
+	print("Jugador golpeado. Vida restante: ", health)
+
+	if health <= 0:
+		player_die()
+	
+func player_die():
+	print("Has muerto")
+	print("Game Over")
+	animated_sprite.play("die")
+	queue_free()
+	
+func _on_hitbox_attack_body_entered(body: Node2D) -> void:
+	if body.is_in_group("mobs"):
+		body.take_damage(1)
+
+func win_game():
+	pass
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	var current_animation = animated_sprite.animation
+	
+	if current_animation == "attack":
+		is_attacking = false
