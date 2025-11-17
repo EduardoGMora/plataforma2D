@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://286jfq4lmdy1"]
 
-[ext_resource type="PackedScene" uid="uid://bmr78a4tcwsnv" path="res://Scenes/level.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://ccs2nnkpqx2k6" path="res://Scenes/hud.tscn" id="1_jjgbg"]
 
 [node name="Main" type="Node2D"]
 
-[node name="Level" parent="." instance=ExtResource("1_jjgbg")]
+[node name="HUD" parent="." instance=ExtResource("1_jjgbg")]

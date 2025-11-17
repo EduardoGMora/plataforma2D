@@ -1,0 +1,113 @@
+[gd_scene load_steps=6 format=3 uid="uid://c55i2uqaj4wwh"]
+
+[ext_resource type="Texture2D" uid="uid://cidgla3oqkmoa" path="res://UI/MountainsLayers/sky.png" id="1_ltlj5"]
+[ext_resource type="Texture2D" uid="uid://bbw3l7ns3qacb" path="res://UI/MountainsLayers/far-clouds.png" id="2_rymcx"]
+[ext_resource type="Texture2D" uid="uid://bcnsdxg457gf4" path="res://UI/MountainsLayers/far-mountains.png" id="3_42s4r"]
+[ext_resource type="Texture2D" uid="uid://cub65x0y0ym76" path="res://UI/MountainsLayers/mountains.png" id="4_kopta"]
+[ext_resource type="Texture2D" uid="uid://dxjs1s2ge2yl0" path="res://UI/MountainsLayers/trees.png" id="5_wi0l6"]
+
+[node name="Background" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="skyparallax" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_filter = 1
+position = Vector2(0, -300)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1280, 0)
+metadata/_edit_group_ = true
+
+[node name="Sky" type="Sprite2D" parent="ParallaxBackground/skyparallax"]
+texture_filter = 1
+position = Vector2(640, 420)
+scale = Vector2(4, 4)
+texture = ExtResource("1_ltlj5")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(1440, 0)
+metadata/_edit_group_ = true
+
+[node name="Far-clouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2(3, 3)
+texture = ExtResource("2_rymcx")
+centered = false
+
+[node name="Far-clouds2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(360, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("2_rymcx")
+centered = false
+
+[node name="Far-clouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(720, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("2_rymcx")
+centered = false
+
+[node name="Far-clouds4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(1080, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("2_rymcx")
+centered = false
+
+[node name="mountain1" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_filter = 1
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(1440, 0)
+metadata/_edit_group_ = true
+
+[node name="Far-mountains" type="Sprite2D" parent="ParallaxBackground/mountain1"]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("3_42s4r")
+centered = false
+
+[node name="Far-mountains2" type="Sprite2D" parent="ParallaxBackground/mountain1"]
+texture_filter = 1
+position = Vector2(480, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("3_42s4r")
+centered = false
+
+[node name="Far-mountains3" type="Sprite2D" parent="ParallaxBackground/mountain1"]
+texture_filter = 1
+position = Vector2(960, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("3_42s4r")
+centered = false
+
+[node name="mountain2" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_filter = 1
+motion_mirroring = Vector2(1920, 0)
+metadata/_edit_group_ = true
+
+[node name="Mountains" type="Sprite2D" parent="ParallaxBackground/mountain2"]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("4_kopta")
+centered = false
+
+[node name="Mountains2" type="Sprite2D" parent="ParallaxBackground/mountain2"]
+texture_filter = 1
+position = Vector2(960, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("4_kopta")
+centered = false
+
+[node name="treesparallax" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_filter = 1
+motion_scale = Vector2(1.5, 1.5)
+motion_mirroring = Vector2(1440, 0)
+metadata/_edit_group_ = true
+
+[node name="Trees" type="Sprite2D" parent="ParallaxBackground/treesparallax"]
+scale = Vector2(3, 3)
+texture = ExtResource("5_wi0l6")
+centered = false
+
+[node name="Trees2" type="Sprite2D" parent="ParallaxBackground/treesparallax"]
+position = Vector2(720, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("5_wi0l6")
+centered = false

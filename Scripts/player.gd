@@ -54,8 +54,10 @@ func _physics_process(delta):
 	elif velocity.x < 0:
 		animated_sprite.flip_h = true
 		attack_hitbox.position.x = -abs(attack_hitbox.position.x)
-		
-	_update_animation()
+	
+	# Only update animation if not attacking
+	if not is_attacking:
+		_update_animation()
 	
 	move_and_slide()
 	
