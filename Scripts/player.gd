@@ -113,6 +113,8 @@ func take_damage(amount):
 	# Play hit animation if available
 	if animated_sprite.sprite_frames.has_animation("hitted"):
 		animated_sprite.play("hitted")
+		# Return to idle after hit animation
+		await get_tree().create_timer(0.3).timeout
 	
 	# Invulnerability frames
 	is_invulnerable = true

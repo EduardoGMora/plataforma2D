@@ -4,12 +4,17 @@ var health = 3
 var is_dead = false
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var hitbox = $Hitbox_Attack/CollisionShape2D
+@onready var hitbox_area = $Hitbox_Attack
 @export var gravity = 980.0
 var direction = -1
 var SPEED = 100.0
 var is_attacking = false
 @export var detection_range = 150.0
 @export var hitbox_offset = Vector2(-1, 2.33333)
+
+func _ready():
+	# Disable hitbox by default to prevent constant damage
+	hitbox_area.monitoring = false
 
 func take_damage(amount):
 	if is_dead:
@@ -57,6 +62,12 @@ func _physics_process(delta):
 		var player_dir = sign(player.global_position.x - global_position.x)
 		if player_dir != 0:
 			direction = player_dir
+		
+		# Trigger attack if player is very close and not already attacking
+		var distance = global_position.distance_to(player.global_position)
+		if distance <= 50 and not is_attacking:
+			# Enable hitbox to trigger attack
+			hitbox_area.monitoring = true
 	else:
 		# Normal patrol behavior
 		if (direction == -1 and $RayCastLeft.is_colliding()) or \
@@ -94,20 +105,32 @@ func _on_hitbox_attack_body_entered(body: Node2D) -> void:
 		is_attacking = true
 		velocity.x = 0  # Stop movement during attack
 		
-		# Play attack animation
+		# Enable hitbox only during attack
+		hitbox_area.monitoring = true
+		
+		# Play attack animation and sound
 		if animated_sprite.sprite_frames.has_animation("attack"):
 			animated_sprite.play("attack")
-			_play_sound(320.0, 0.1)  # Attack swoosh sound
-			# Wait for animation to play a bit before applying damage
-			await get_tree().create_timer(0.3).timeout
+		_play_sound(320.0, 0.1)  # Attack swoosh sound
 		
-		# Apply damage if player still in range
-		if body and is_instance_valid(body):
-			body.take_damage(1)
+		# Wait for attack animation timing before applying damage
+		await get_tree().create_timer(0.3).timeout
 		
-		# Return to normal behavior
-		await get_tree().create_timer(0.5).timeout
-		is_attacking = false
+		# Apply damage only if player still in hitbox range
+		var overlapping = hitbox_area.get_overlapping_bodies()
+		for overlapping_body in overlapping:
+			if overlapping_body.is_in_group("player") and overlapping_body.has_method("take_damage"):
+				overlapping_body.take_damage(1)
+				break
+		
+		# Disable hitbox immediately after damage
+		hitbox_area.monitoring = false
+		
+		# Wait before allowing next attack
+		get_tree().create_timer(0.7).timeout.connect(func(): 
+			if not is_dead:
+				is_attacking = false
+		)
 
 func _play_sound(freq: float, duration: float, vol_db: float = -8.0) -> void:
 	var sfx_player = AudioStreamPlayer.new()
