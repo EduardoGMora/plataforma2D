@@ -4,7 +4,6 @@ extends Node2D
 @onready var exit_button: Button = $ExitButton
 @onready var title_label: RichTextLabel = $RichTextLabel
 @onready var coin_label: Label = $CoinLabel
-@onready var hp_label: Label = $HPLabel
 @onready var message_label: Label = $MessageLabel
 @onready var hp_hearts: Node2D = $HP
 
@@ -17,7 +16,6 @@ func _ready() -> void:
 	coin_label.visible = false
 	message_label.visible = false
 	hp_hearts.visible = false
-	hp_label.visible = false
 	play_button.pressed.connect(_on_play_pressed)
 	exit_button.pressed.connect(_on_exit_pressed)
 

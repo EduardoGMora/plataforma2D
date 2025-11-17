@@ -37,11 +37,10 @@ A classic 2D platformer game built with Godot 4.4 featuring a knight character c
 
 | Action | Keys |
 |--------|------|
-| Move Left | ← / A / Left Arrow |
-| Move Right | → / D / Right Arrow |
-| Jump/Double Jump | Space / W / Up Arrow |
-| Attack | Left Shift |
-| Roll | Left Control |
+| Move Left | ← / Left Arrow |
+| Move Right | → / Right Arrow |
+| Jump/Double Jump | Space |
+| Attack | D |
 
 ## 📋 Project Requirements Coverage
 
