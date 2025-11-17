@@ -13,6 +13,3 @@
 
 # Export presets
 export_presets.cfg
-
-# Build directories
-*.exe
