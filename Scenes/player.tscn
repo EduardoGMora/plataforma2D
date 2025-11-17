@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://she1lhxisrgm"]
+[gd_scene load_steps=79 format=3 uid="uid://she1lhxisrgm"]
 
 [ext_resource type="Script" uid="uid://bkvfo2luhd5ie" path="res://Scripts/player.gd" id="1_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://b4183fi8mtyh8" path="res://assets/120x80_PNGSheets/_Idle.png" id="1_i3pqv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dyc7tvwbfeqon" path="res://assets/120x80_PNGSheets/_DeathNoMovement.png" id="3_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://btu32eey84aq4" path="res://assets/120x80_PNGSheets/_JumpFallInbetween.png" id="3_sweqy"]
 [ext_resource type="Texture2D" uid="uid://dbannc1vwajqk" path="res://assets/120x80_PNGSheets/_AttackComboNoMovement.png" id="4_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://prqr6yfbndd8" path="res://assets/120x80_PNGSheets/_Hit.png" id="4_tx1dd"]
 [ext_resource type="Texture2D" uid="uid://d14fhk0pcxb6h" path="res://assets/120x80_PNGSheets/_Run.png" id="5_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://fy4445bbolkr" path="res://assets/120x80_PNGSheets/_Roll.png" id="6_b26j0"]
 [ext_resource type="Texture2D" uid="uid://b14h71x2h66j7" path="res://assets/120x80_PNGSheets/_WallClimbNoMovement.png" id="6_dw050"]
@@ -89,6 +90,10 @@ region = Rect2(960, 0, 120, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fs7ks"]
 atlas = ExtResource("3_f1ek2")
 region = Rect2(1080, 0, 120, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6n3p"]
+atlas = ExtResource("4_tx1dd")
+region = Rect2(0, 0, 120, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2hs0m"]
 atlas = ExtResource("1_i3pqv")
@@ -340,6 +345,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_l6n3p")
+}],
+"loop": true,
+"name": &"hitted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_2hs0m")
 }, {
 "duration": 1.0,
@@ -513,7 +526,7 @@ metadata/_edit_group_ = true
 texture_filter = 1
 position = Vector2(4, -12)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
-animation = &"wallclimb"
+animation = &"hitted"
 speed_scale = 1.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -525,6 +538,8 @@ shape = SubResource("CapsuleShape2D_1jxqw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox_Attack"]
 position = Vector2(20, 8)
 shape = SubResource("CapsuleShape2D_8erm5")
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Hitbox_Attack" to="." method="_on_hitbox_attack_body_entered"]

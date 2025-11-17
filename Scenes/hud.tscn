@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccs2nnkpqx2k6"]
+[gd_scene load_steps=4 format=3 uid="uid://ccs2nnkpqx2k6"]
 
 [ext_resource type="PackedScene" uid="uid://c55i2uqaj4wwh" path="res://Scenes/background.tscn" id="1_e0onf"]
+[ext_resource type="Script" uid="uid://bmbsuabl87fvl" path="res://Scripts/hud.gd" id="2_hudgd"]
+[ext_resource type="PackedScene" uid="uid://7mke02if3bqd" path="res://Scenes/hp.tscn" id="3_hp"]
 
 [node name="HUD" type="Node2D"]
+script = ExtResource("2_hudgd")
 
 [node name="PlayButton" type="Button" parent="."]
 z_index = 999
@@ -37,3 +40,28 @@ fit_content = true
 
 [node name="Background" parent="." instance=ExtResource("1_e0onf")]
 position = Vector2(-108, 85)
+
+[node name="CoinLabel" type="Label" parent="."]
+visible = false
+z_index = 1000
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 28
+text = "Coins: 0 / 10"
+
+[node name="MessageLabel" type="Label" parent="."]
+z_index = 1000
+offset_left = 420.0
+offset_top = 24.0
+offset_right = 900.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="HP" parent="." instance=ExtResource("3_hp")]
+visible = false
+z_index = 1000
+position = Vector2(22, 103)
+scale = Vector2(2, 2)

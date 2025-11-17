@@ -24,28 +24,33 @@ scale = Vector2(4, 4)
 texture = ExtResource("1_ltlj5")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_filter = 1
 motion_scale = Vector2(0.5, 0.5)
 motion_mirroring = Vector2(1440, 0)
 metadata/_edit_group_ = true
 
 [node name="Far-clouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
 scale = Vector2(3, 3)
 texture = ExtResource("2_rymcx")
 centered = false
 
 [node name="Far-clouds2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
 position = Vector2(360, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("2_rymcx")
 centered = false
 
 [node name="Far-clouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
 position = Vector2(720, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("2_rymcx")
 centered = false
 
 [node name="Far-clouds4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
 position = Vector2(1080, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("2_rymcx")
@@ -102,11 +107,13 @@ motion_mirroring = Vector2(1440, 0)
 metadata/_edit_group_ = true
 
 [node name="Trees" type="Sprite2D" parent="ParallaxBackground/treesparallax"]
+texture_filter = 1
 scale = Vector2(3, 3)
 texture = ExtResource("5_wi0l6")
 centered = false
 
 [node name="Trees2" type="Sprite2D" parent="ParallaxBackground/treesparallax"]
+texture_filter = 1
 position = Vector2(720, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("5_wi0l6")

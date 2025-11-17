@@ -1,9 +1,9 @@
 extends Camera2D
 
-var velocity = 20
+@export var enable_smoothing: bool = true
+@export var smoothing_speed: float = 5.0
 
-func _proccess(delta):
-	if Input.is_action_pressed("ui_right"):
-		position.x += velocity * delta
-	if Input.is_action_pressed("ui_left"):
-		position.x -= velocity * delta
+func _ready() -> void:
+	enabled = true
+	position_smoothing_enabled = enable_smoothing
+	position_smoothing_speed = smoothing_speed
